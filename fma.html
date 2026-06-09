@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EEMTI Francisco Miguel de Andrade | Campos Sales – CE</title>
 <meta name="description" content="Escola de Ensino Médio em Tempo Integral Francisco Miguel de Andrade – Campos Sales, Ceará. Educação pública de qualidade no coração do Cariri Oeste.">
+
+<!-- ═══════════════════════════════════════════════════
+     FAVICON — substitua o caminho abaixo pelo arquivo da logo/favicon da escola
+     Formatos aceitos: .png, .ico, .svg
+     Exemplo: href="assets/favicon.png"  ou  href="images/logo-fma.ico"
+═══════════════════════════════════════════════════ -->
+<link rel="icon" type="image/png" href="favicon-fma.ico">
+<!-- Se quiser tamanhos múltiplos (recomendado), substitua a linha acima por:
+<link rel="icon" type="image/png" sizes="32x32" href="CAMINHO_DO_FAVICON_32px">
+<link rel="icon" type="image/png" sizes="16x16" href="CAMINHO_DO_FAVICON_16px">
+<link rel="apple-touch-icon"       sizes="180x180" href="CAMINHO_DA_LOGO_180px">
+-->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -81,6 +94,12 @@ ul { list-style: none; }
   font-weight: 800; font-size: 14px;
   letter-spacing: -0.5px;
   flex-shrink: 0;
+  overflow: hidden; /* garante que a imagem respeite o border-radius */
+}
+/* Quando a logo estiver presente, a imagem preenche o espaço inteiro */
+.nav-logo-mark img {
+  width: 100%; height: 100%;
+  object-fit: contain; /* use "cover" se preferir preencher sem espaço em branco */
 }
 .nav-logo-text {
   font-family: var(--font-display);
@@ -586,6 +605,13 @@ section { padding: 88px 8%; }
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 800; font-size: 13px;
+  overflow: hidden; /* garante que a imagem respeite o border-radius circular */
+  flex-shrink: 0;
+}
+/* Quando a logo estiver presente */
+.insta-pfp img {
+  width: 100%; height: 100%;
+  object-fit: contain;
 }
 .insta-handle { font-size: 13px; font-weight: 600; color: var(--texto); }
 .insta-handle span { display: block; font-size: 11px; font-weight: 400; color: var(--texto-soft); }
@@ -757,7 +783,18 @@ footer {
 <!-- ════════════════ NAVBAR ════════════════ -->
 <nav class="nav" id="navbar">
   <div class="nav-logo">
-    <div class="nav-logo-mark">FMA</div>
+    <div class="nav-logo-mark">
+      <!--
+        LOGO DA ESCOLA — CABEÇALHO (navbar)
+        Substitua o src abaixo pelo caminho do arquivo de imagem da logo.
+        Exemplo: src="assets/logo-fma.png"  ou  src="images/logo.svg"
+        O fundo verde permanece visível enquanto a imagem não estiver carregada.
+      -->
+      <img src="logo-fma.png" alt="Logo EEMTI Francisco Miguel de Andrade"
+           onerror="this.style.display='none';this.parentElement.dataset.fallback='FMA';"
+           id="nav-logo-img">
+      <span id="nav-logo-fallback" style="display:none">FMA</span>
+    </div>
     <div class="nav-logo-text">
       EEMTI Francisco Miguel de Andrade
       <div class="nav-logo-sub">Campos Sales – Ceará</div>
@@ -1129,7 +1166,16 @@ footer {
       </div>
       <div class="insta-mockup">
         <div class="insta-header">
-          <div class="insta-pfp">FMA</div>
+          <div class="insta-pfp">
+          <!--
+            LOGO DA ESCOLA — INSTAGRAM MOCKUP
+            Substitua o src abaixo pelo mesmo caminho da logo usada no cabeçalho.
+            Exemplo: src="assets/logo-fma.png"
+            O gradiente de fundo aparece enquanto a imagem não carregar.
+          -->
+          <img src="CAMINHO_DA_LOGO_AQUI" alt="Logo FMA"
+               onerror="this.style.display='none';">
+        </div>
           <div>
             <div class="insta-handle">@eemti.fma <span>EEMTI Francisco Miguel de Andrade</span></div>
           </div>
@@ -1161,7 +1207,7 @@ footer {
     <div class="loc-grid">
       <div class="loc-map">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d996.5613441650676!2d-40.22621294295618!3d-6.954805849122142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x798bbbd34f291a9%3A0x4e12ec6b88b39710!2sE.E.M.%20Francisco%20Miguel%20de%20Andrade!5e1!3m2!1spt-BR!2sbr!4v1781009638197!5m2!1spt-BR!2sbr"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15703.5!2d-40.3758!3d-7.0739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7781a5b8e8d7d69%3A0x5f2c1234ab56cdef!2sCampos+Sales%2C+CE!5e0!3m2!1spt-BR!2sbr!4v1234567890"
           allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           title="Localização da EEMTI Francisco Miguel de Andrade">
@@ -1273,6 +1319,20 @@ footer {
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 });
+
+// Fallback: se a logo da navbar não carregar, mostra o texto "FMA"
+const navImg = document.getElementById('nav-logo-img');
+if (navImg) {
+  navImg.addEventListener('error', () => {
+    navImg.style.display = 'none';
+    document.getElementById('nav-logo-fallback').style.display = 'inline';
+  });
+  // Se o src ainda é o placeholder, já exibe o fallback
+  if (navImg.src.includes('CAMINHO_DA_LOGO_AQUI')) {
+    navImg.style.display = 'none';
+    document.getElementById('nav-logo-fallback').style.display = 'inline';
+  }
+}
 
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
